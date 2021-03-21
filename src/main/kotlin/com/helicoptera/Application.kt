@@ -37,11 +37,8 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
+        this.root()
     }
     routing {
         get("/json/gson") {
