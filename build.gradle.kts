@@ -37,9 +37,9 @@ dependencies {
     implementation("io.ktor:ktor-auth-jwt:$ktor_version")
 
     //Database
-    implementation("org.jetbrains.exposed:exposed:0.17.13")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.17.13")
+    implementation("org.jetbrains.exposed", "exposed-core", "0.30.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.30.1")
 
     //H2 Database
-    implementation("org.xerial:sqlite-jdbc:3.30.1")
+    implementation("com.h2database:h2:1.4.199")
 }

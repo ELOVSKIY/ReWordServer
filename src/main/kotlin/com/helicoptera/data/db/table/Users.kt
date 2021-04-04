@@ -5,12 +5,16 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 
 object Users : Table("users") {
-    val id = integer("id").autoIncrement().primaryKey()
-    val name = varchar("name", length = 50)
+    val id = integer("id").autoIncrement()
+    val username = varchar("username", length = 255)
+    val password = varchar("password", length = 255)
 
-    fun toUser(row: ResultRow) : User {
+    override val primaryKey = PrimaryKey(id, name="PK_User_ID")
+
+    fun toUser(row: ResultRow): User {
         return User(
-            name = row[Users.name]
+            username = row[username],
+            password = row[password]
         )
     }
 }

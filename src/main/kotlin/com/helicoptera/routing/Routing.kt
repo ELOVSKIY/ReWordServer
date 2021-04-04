@@ -1,5 +1,8 @@
 package com.helicoptera.routing
 
+import com.helicoptera.data.db.model.User
+import com.helicoptera.data.db.transaction.addUser
+import com.helicoptera.data.db.transaction.fetchAllUsers
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -8,13 +11,15 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Routing.root() {
-    get("/") {
-        call.respondText("Hello World!")
+    get("/users") {
+        val users = fetchAllUsers()
+        call.respond(users)
     }
 
-    post("/") {
-        val post = call.receive<String>()
-        call.respondText("Received $post from the post bidy.", ContentType.Text.Plain )
+    post("/registration") {
+        val user = call.receive<User>()
+        addUser(user)
+        call.respond("OK")
     }
 
     authenticate {

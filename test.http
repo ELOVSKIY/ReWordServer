@@ -1,0 +1,7 @@
+POST http://0.0.0.0:8080/registration
+Content-Type: application/json
+
+{
+  "username" : "stas",
+  "password" : "123456"
+}
