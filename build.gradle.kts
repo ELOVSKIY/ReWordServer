@@ -31,4 +31,15 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+
+    //Authorization
+    implementation("io.ktor:ktor-auth:$ktor_version")
+    implementation("io.ktor:ktor-auth-jwt:$ktor_version")
+
+    //Database
+    implementation("org.jetbrains.exposed:exposed:0.17.13")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.17.13")
+
+    //H2 Database
+    implementation("org.xerial:sqlite-jdbc:3.30.1")
 }
