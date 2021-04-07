@@ -19,7 +19,7 @@ fun Routing.root() {
     post("/registration") {
         val user = call.receive<User>()
         addUser(user)
-        call.respond("OK")
+
     }
 
     authenticate {
