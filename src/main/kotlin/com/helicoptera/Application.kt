@@ -3,8 +3,10 @@ package com.helicoptera
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.helicoptera.authentication.session.UserSession
+import com.google.gson.Gson
+import com.helicoptera.authentication.session.Session
 import com.helicoptera.data.db.initDB
+import com.helicoptera.routing.authorization
 import com.helicoptera.routing.root
 import io.ktor.routing.*
 import io.ktor.http.*
@@ -13,6 +15,8 @@ import io.ktor.gson.*
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
+import io.ktor.http.content.*
+import io.ktor.locations.*
 import io.ktor.sessions.*
 
 fun main(args: Array<String>): Unit {
@@ -27,9 +31,9 @@ fun Application.module(testing: Boolean = false) {
     val jwtAudience = environment.config.property("jwt.audience").getString()
     val jwtRealm = environment.config.property("jwt.realm").getString()
 
-    val loginSession = environment.config.property("session.login").getString()
+    val session = environment.config.property("session.session").getString()
 
-
+    install(Locations)
     install(CORS) {
         method(HttpMethod.Options)
         method(HttpMethod.Put)
@@ -43,29 +47,38 @@ fun Application.module(testing: Boolean = false) {
 
     install(ContentNegotiation) {
         gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
+            register(ContentType.Application.Any, GsonConverter(Gson()))
         }
     }
 
     install(Sessions) {
-        cookie<UserSession>(loginSession)
+        cookie<Session>(session)
     }
 
-    install(Authentication) {
-        jwt {
-            realm = jwtRealm
-            verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
-            validate { credential ->
-                if (credential.payload.audience.contains(jwtAudience)) {
-                    JWTPrincipal(credential.payload)
-                } else {
-                    null
-                }
-
-            }
-        }
-    }
+//    install(Authentication) {
+//        jwt {
+//            realm = jwtRealm
+//            verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
+//            validate { credential ->
+//                if (credential.payload.audience.contains(jwtAudience)) {
+//                    JWTPrincipal(credential.payload)
+//                } else {
+//                    null
+//                }
+//
+//            }
+//        }
+//    }
 
     routing {
+        static{
+            static("static") {
+                resources("static")
+            }
+        }
+        authorization()
         this.root()
     }
 }

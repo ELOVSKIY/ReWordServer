@@ -42,4 +42,7 @@ dependencies {
 
     //H2 Database
     implementation("com.h2database:h2:1.4.199")
+
+    //Locations
+    implementation("io.ktor:ktor-locations:$ktor_version")
 }
