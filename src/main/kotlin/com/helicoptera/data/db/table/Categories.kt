@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.Table
 object Categories : Table("Categories") {
     val id = integer("id").autoIncrement()
     val name = varchar("name", length = 255)
+    val selected = bool("selected")
 
     val iconId = integer("iconId").references(Icons.id,
         onDelete = ReferenceOption.NO_ACTION,

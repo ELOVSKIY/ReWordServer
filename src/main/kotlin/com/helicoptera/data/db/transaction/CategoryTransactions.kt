@@ -3,10 +3,7 @@ package com.helicoptera.data.db.transaction
 import com.helicoptera.data.db.model.Category
 import com.helicoptera.data.db.table.Categories
 import com.helicoptera.data.db.table.Icons
-import org.jetbrains.exposed.sql.Join
-import org.jetbrains.exposed.sql.JoinType
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun insertCategory(name: String, userId: Int, iconId: Int) {
@@ -15,11 +12,20 @@ fun insertCategory(name: String, userId: Int, iconId: Int) {
             it[Categories.name] = name
             it[Categories.userId] = userId
             it[Categories.iconId] = iconId
+            it[Categories.selected] = false
         }
     }
 }
 
-fun fetchAllCategories(userId: Int): List<Category> {
+fun changeCategoryStatus(categoryId: Int, selectedStatus: Boolean) {
+    transaction {
+        Categories.update {
+            it[selected] = selectedStatus
+        }
+    }
+}
+
+fun fetchAllCategoriesByUseId(userId: Int): List<Category> {
     val categories = mutableListOf<Category>()
     transaction {
         val categoriesResultRows = Join(Categories, Icons,
@@ -30,7 +36,7 @@ fun fetchAllCategories(userId: Int): List<Category> {
             }
         categories.addAll(
             categoriesResultRows.map {
-                Category(it[Categories.name], it[Icons.url])
+                Category(it[Categories.id], it[Categories.name], it[Icons.url])
             }
         )
     }

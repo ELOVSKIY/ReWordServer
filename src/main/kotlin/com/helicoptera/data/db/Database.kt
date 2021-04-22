@@ -18,29 +18,29 @@ fun initDB() {
 private fun initSchemas() {
     transaction {
         SchemaUtils.create(Users, Icons, Categories, Words)
-
-        try {
-            insert("video.png")
-        } catch (e: Exception) { }
-
-
-        val iconId = fetchAllIcons()[0].id
-        val users = fetchAllUsers()
-
-        try {
-            for (user in users) {
-                val userId = user.id
-                for (i in 1..10) {
-                    insertCategory("video$i", userId, iconId)
-                }
-            }
-        } catch (e: Exception) {
-            print(e.message)
-        }
-
-
-        val userId = users[0].id
-        val categories = fetchAllCategories(userId)
-        print(categories)
+//
+//        try {
+//            insert("static/video.png")
+//        } catch (e: Exception) { }
+//
+//
+//        val iconId = fetchAllIcons()[0].id
+//        val users = fetchAllUsers()
+//
+//        try {
+//            for (user in users) {
+//                val userId = user.id
+//                for (i in 1..10) {
+//                    insertCategory("video$i", userId, iconId)
+//                }
+//            }
+//        } catch (e: Exception) {
+//            print(e.message)
+//        }
+//
+//
+//        val userId = users[0].id
+//        val categories = fetchAllCategoriesByUseId(userId)
+//        print(categories)
     }
 }
