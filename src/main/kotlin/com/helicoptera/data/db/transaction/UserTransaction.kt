@@ -25,6 +25,13 @@ fun fetchUserByUsername(username: String) : User? {
     return if (users.isEmpty()) null else toUser(users[0])
 }
 
+fun fetchUserById(id: Int) : User? {
+    val users = transaction {
+        Users.select { Users.id eq id }.toList()
+    }
+    return if (users.isEmpty()) null else toUser(users[0])
+}
+
 fun fetchAllUsers() : List<User> {
     val users = mutableListOf<User>()
     transaction {

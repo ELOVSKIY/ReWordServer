@@ -5,3 +5,5 @@ data class User(
     val username: String,
     val password: String
 )
+
+fun User.empty() = User(0, "", "")
