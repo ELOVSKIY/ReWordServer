@@ -39,18 +39,23 @@ fun Routing.authorization() {
                     insertUser(newUser)
                 } catch (e: Throwable) {
 //                    if (dao.user(form.userId) != null) {
-                        call.respond(AuthorizationResponse(error = "User with the following login is already registered"))
+//                        call.respond(AuthorizationResponse(error = "User with the following login is already registered"))
 //                    } else if (dao.userByEmail(form.email) != null) {
 //                        call.respond(AuthorizationResponse(error = "User with the following email ${form.email} is already registered"))
 //                    } else {
-                        application.environment.log.error("Failed to register user", e)
-                        call.respond(AuthorizationResponse(error = "Failed to register"))
+//                        application.environment.log.error("Failed to register user", e)
+//                        call.respond(AuthorizationResponse(error = "Failed to register"))
 //                    }
+
+//                    val response = Gson().toJson(AuthorizationResponse(newUser))
+//                    call.sessions.set(Session(newUser.username))
+//                    call.response.headers.append(HttpHeaders.Accept, "application/json")
+//                    call.respond(response)
                 }
 
-                call.sessions.set("SESSION", Session(newUser.username))
-                val response = Gson().toJson(AuthorizationResponse(newUser))
                 call.response.headers.append(HttpHeaders.Accept, "application/json")
+                call.sessions.set(Session(newUser.username))
+                val response = Gson().toJson(AuthorizationResponse(newUser))
                 call.respond(response)
             }
         }

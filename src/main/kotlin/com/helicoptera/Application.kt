@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.google.gson.Gson
 import com.helicoptera.authentication.session.Session
 import com.helicoptera.data.db.initDB
+import com.helicoptera.data.db.model.User
 import com.helicoptera.routing.authorization
 import com.helicoptera.routing.root
 import io.ktor.routing.*
@@ -18,6 +19,7 @@ import io.ktor.auth.jwt.*
 import io.ktor.http.content.*
 import io.ktor.locations.*
 import io.ktor.sessions.*
+import java.util.*
 
 fun main(args: Array<String>): Unit {
     initDB()
@@ -27,11 +29,12 @@ fun main(args: Array<String>): Unit {
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    val jwtIssuer = environment.config.property("jwt.domain").getString()
-    val jwtAudience = environment.config.property("jwt.audience").getString()
-    val jwtRealm = environment.config.property("jwt.realm").getString()
+//    val jwtIssuer = environment.config.property("jwt.domain").getString()
+//    val jwtAudience = environment.config.property("jwt.audience").getString()
+//    val jwtRealm = environment.config.property("jwt.realm").getString()
+//    val jwtValidityMs = environment.config.property("jwt.validityMs").getString()
 
-    val session = environment.config.property("session.session").getString()
+    val session = environment.config.property("session.authorization").getString()
 
     install(Locations)
     install(CORS) {
@@ -39,8 +42,9 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Put)
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
+        method(HttpMethod.Get)
         header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
+        header("")
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
@@ -78,7 +82,6 @@ fun Application.module(testing: Boolean = false) {
                 resources("static")
             }
         }
-        authorization()
         this.root()
     }
 }
