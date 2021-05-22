@@ -4,6 +4,5 @@ data class Word(
     val word: String,
     val translation: String,
     val transcriptions: String,
-    val categoryName: String,
-    val imageUrl : String?
+    val imageUrl : String? = null
 )

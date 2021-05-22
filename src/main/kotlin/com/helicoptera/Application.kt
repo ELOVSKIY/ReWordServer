@@ -6,20 +6,15 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.google.gson.Gson
 import com.helicoptera.authentication.session.Session
 import com.helicoptera.data.db.initDB
-import com.helicoptera.data.db.model.User
-import com.helicoptera.routing.authorization
 import com.helicoptera.routing.root
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.auth.jwt.*
 import io.ktor.http.content.*
 import io.ktor.locations.*
 import io.ktor.sessions.*
-import java.util.*
 
 fun main(args: Array<String>): Unit {
     initDB()
@@ -44,7 +39,6 @@ fun Application.module(testing: Boolean = false) {
         method(HttpMethod.Patch)
         method(HttpMethod.Get)
         header(HttpHeaders.Authorization)
-        header("")
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
     }
@@ -77,7 +71,7 @@ fun Application.module(testing: Boolean = false) {
 //    }
 
     routing {
-        static{
+        static {
             static("static") {
                 resources("static")
             }

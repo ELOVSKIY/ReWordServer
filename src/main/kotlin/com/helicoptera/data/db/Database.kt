@@ -37,10 +37,6 @@ private fun initSchemas() {
 //        } catch (e: Exception) {
 //            print(e.message)
 //        }
-//
-//
-//        val userId = users[0].id
-//        val categories = fetchAllCategoriesByUseId(userId)
-//        print(categories)
+
     }
 }

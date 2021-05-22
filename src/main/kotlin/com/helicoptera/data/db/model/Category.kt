@@ -1,7 +1,7 @@
 package com.helicoptera.data.db.model
 
 data class Category(
-    val categoryId: Int,
+    val id: Int,
     val name: String,
     val iconUrl: String,
     val selected: Boolean = false,

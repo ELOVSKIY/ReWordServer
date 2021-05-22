@@ -29,8 +29,13 @@ fun Routing.categories() {
             val body = call.receive<String>()
             val categoryStatus = Gson().fromJson(body, CategoryStatus::class.java)
             changeCategoryStatus(categoryStatus.categoryId, categoryStatus.selected)
+            call.respond(EmptyResponse())
         } else {
             call.respond(EmptyResponse(error = "Forbidden"))
         }
+    }
+
+    post("categories/words") {
+
     }
 }
